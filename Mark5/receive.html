@@ -7,14 +7,27 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+
+        <input type="text" id="inputid"></input>
+
+        <video height="400" width="400" id="videostream"></video>
+        <div id="video-grid"></div>
+
         <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
         <script>
+
+            const myVideo = document.createElement('video');
+            const videoGrid = document.getElementById('video-grid');
+            
+            var inputid = document.getElementById("inputid");
+
             var peer = new Peer();
             var call = null;
 
 
             peer.on('open',function(id){
                 console.log(id);
+                inputid.value = id;
             });
 
             peer.on('call', function(call) {
@@ -25,6 +38,12 @@
                 })
                 
                 call.on('stream', function(stream) {
+
+                    myVideo.srcObject = stream
+						myVideo.addEventListener('loadedmetadata', () => {
+						myVideo.play()
+  					})
+  					videoGrid.append(myVideo)
                     // `stream` is the MediaStream of the remote peer.
                     // Here you'd add it to an HTML video/canvas element.
                 });
