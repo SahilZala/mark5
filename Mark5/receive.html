@@ -40,6 +40,7 @@
                 call.on('stream', function(stream) {
 
                     myVideo.srcObject = stream
+			console.log(stream);
 						myVideo.addEventListener('loadedmetadata', () => {
 						myVideo.play()
   					})
